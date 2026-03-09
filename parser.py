@@ -30,16 +30,16 @@ def filter_by_category(transactions: Iterator[Transaction], category: str) -> Ge
 
 
 def filter_by_month(transactions: Iterator[Transaction], month: int, year:int = None) -> Generator:
-    if not (0 < month <= 12) or not isinstance(month, int):
+    if not isinstance(month, int) or not (0 < month <= 12):
         raise ValueError(
-            "Значение месяца должно быть числом в диапазоне от 1 до 12 включительно"
+            f"Переданное значение месяца: {month}, тип данных: {type(month)}. Должно быть число в диапазоне от 1 до 12 включительно"
         )
 
     if year is None:
         year = datetime.now().year
 
-    if not isinstance(year, int):
-        raise ValueError("Значение года должно быть числом")
+    if not isinstance(year, int) or not (2000 < year <= datetime.now().year):
+        raise ValueError(f"Переданное значение года: {year}, тип данных: {type(year)}. Должно быть число в диапазоне от 2000 до текущего года")
 
     for transaction in transactions:
         if transaction.date.month == month and transaction.date.year == year:
@@ -48,7 +48,7 @@ def filter_by_month(transactions: Iterator[Transaction], month: int, year:int = 
 
 def filter_by_type(transactions: Iterator[Transaction], tx_type: str) -> Generator:
     if not (tx_type == "expense" or tx_type == "income"):
-        raise ValueError("Некорректный тип транзакций, ожидался: expense/income")
+        raise ValueError(f"Некорректный тип транзакций - '{tx_type}', ожидался: 'expense/income'")
 
     for transaction in transactions:
         if tx_type == "income" and transaction.is_income():
