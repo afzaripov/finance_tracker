@@ -47,3 +47,8 @@ class Transaction:
     
     def __repr__(self):
         return f"Transaction(date={self.date.strftime("%Y-%m-%d")}, amount={self.amount}, category={self.category})"
+
+    def __eq__(self, other):
+        if not isinstance(other, Transaction):
+            return NotImplemented
+        return self.date == other.date and self.amount == other.amount and self.category == other.category and self.description == other.description
