@@ -8,7 +8,7 @@ from transaction import Transaction
 import csv
 
 
-@timer
+
 @validate_file
 def read_transactions(filepath: str) -> Generator:
     with open(filepath, "r", encoding="utf-8") as file:
